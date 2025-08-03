@@ -1,6 +1,6 @@
-<<<<<<< HEAD
+
 # Chess-Engine
-=======
+
 ## Chess Engine By Rikard
 
 ## ROADMAP
@@ -14,4 +14,3 @@
     -   [ ] Make the computer be able to input
     -   [ ] Give it positive and negative feedback for behavior
     -   [ ] Train the chess engines against each other and crown the winner
->>>>>>> 68603cb (made a readme)
