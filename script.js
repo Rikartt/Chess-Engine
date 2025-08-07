@@ -8,6 +8,18 @@ function createGrid (width, height) {
     }
     return retgrid
 }
+class Sprite {
+    constructor(width, height, x, y, name) {
+        this.width = width
+        this.height = height
+        this.x = x
+        this.y = y
+        this.name = name
+    }
+    draw() {
+        
+    }
+}
 const mapNumtoLetter = {
   0: "A",
   1: "B",
@@ -49,7 +61,11 @@ function renderGrid (grid, elementid) {
                 ctx.fillStyle = "black";
             }
             ctx.fillRect(i*tilewidth, j*tileheight, tilewidth, tileheight);
-            ctx.fillStyle="blue"
+            if (!((i + j) % 2)) {
+                ctx.fillStyle = "black";
+            } else {
+                ctx.fillStyle = "white";
+            }
             ctx.fillText(`${mapNumtoLetter[i]}${8 - j}`, i*tilewidth+10, (j+1)*tileheight-10, 20)
         }
     }
