@@ -8,7 +8,7 @@
 -   [ ] Set up a basic chess game
     -   [ ] Make a visual part for the chess engine.
         -   [X] Make a sprite object that has a draw function.
-        -   [ ] Finish sprite logic. Sprites should be able to be drawn anywhere but there needs to be logic that wraps around the sprite object in order to be able to spawn a sprite in any given tile on the chessboard.
+        -   [X] Finish sprite logic. Sprites should be able to be drawn anywhere but there needs to be logic that wraps around the sprite object in order to be able to spawn a sprite in any given tile on the chessboard.
         -   [ ] When sprite logic is done, one should be able to drag pieces to other tiles. There should later be logic that blocks illegal moves.
         -   [ ] Make the js read from a json file to be able to spawn in the starting formations etc. this can later be utilized to save formations/games to continue later.
     -   [ ] Write the logic for the pieces
