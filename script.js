@@ -9,15 +9,21 @@ function createGrid (width, height) {
     return retgrid
 }
 class Sprite {
-    constructor(width, height, x, y, name) {
+    constructor(width, height, x, y, name, ctx) {
+        this.ctx = ctx
         this.width = width
         this.height = height
         this.x = x
         this.y = y
         this.name = name
+        this.image = new Image(this.width, this.height)
+        this.image.src = `sprites/${this.name}.png`
     }
     draw() {
-        
+        this.image.addEventListener("load", (e) => {
+            this.ctx.drawImage(this.image, this.x, this.y);
+            console.log("drew image")
+        });
     }
 }
 const mapNumtoLetter = {
@@ -66,11 +72,14 @@ function renderGrid (grid, elementid) {
             } else {
                 ctx.fillStyle = "white";
             }
-            ctx.fillText(`${mapNumtoLetter[i]}${8 - j}`, i*tilewidth+10, (j+1)*tileheight-10, 20)
+            ctx.fillText(`${mapNumtoLetter[i]}${8 - j}`, i*tilewidth+10, (j+1)*tileheight-10, 20);
+            //let Knight = new Sprite(64, 64, 50, 50, "K", ctx)
+            //Knight.draw()
         }
     }
 }
 let maingrid = createGrid(8,8)
 console.log(maingrid)
 maingrid[5][5] = "K"
+
 renderGrid(maingrid, "maincanvas")
