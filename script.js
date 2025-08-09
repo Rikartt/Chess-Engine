@@ -75,6 +75,12 @@ const mapNumtoLetter = {
   24: "Y",
   25: "Z"
 };
+async function readformation(formation) {
+    // /public/data.json -> same origin
+    const data = await fetch(`formations/${formation}.json`).then(r => r.json());
+    console.log(data);
+    return data
+}
 function renderGrid (grid, elementid) {
     var c = document.getElementById(elementid);
     var ctx = c.getContext("2d");
@@ -173,10 +179,12 @@ function setupInput(elementid, grid) {
   c.addEventListener('mouseup', endDrag);
   c.addEventListener('mouseleave', endDrag);
 }
-
+readformation('starting_formation')
+  .then(data => PcsList = data)
+  .catch(err => console.error(err));
 let maingrid = createGrid(8,8)
 console.log(maingrid)
-addPc("K", "Black", 2, 4)
+//addPc("K", "Black", 2, 4)
 setupInput("maincanvas", maingrid)
 function drawAll() {
     renderGrid(maingrid, "maincanvas")
