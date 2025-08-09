@@ -19,6 +19,7 @@ class Sprite {
         this.x = x
         this.y = y
         this.name = name
+        this.dragging = false
         if (!imgcache[this.name]) {
             imgcache[this.name] = new Image(this.width, this.height)
             imgcache[this.name].src = `sprites/${this.name}.png`;
@@ -91,21 +92,95 @@ function renderGrid (grid, elementid) {
 }
 let PcsList = [] // Piece object structure {Type, Color, X, Y}
 function addPc (type, color, x, y) {
-    PcsList.push({type: type, color: color, x: x, y: y})
+    PcsList.push({type: type, color: color, x: x, y: y, dragging: false})
+}
+function findPc (x, y) {
+    let ismatch = (element) => element.x == x && element.y == y;
+    if (PcsList.findIndex(ismatch) != -1) {return PcsList.findIndex(ismatch)} else {return false};
 }
 function renderPcs(grid, elementid) {
     var c = document.getElementById(elementid);
     var ctx = c.getContext("2d");
     var dwidth = c.width; var dheight = c.height; //Screen width and height
     var tilewidth = dwidth / grid.length; var tileheight = dheight / grid[0].length; // Tile height and width
+//    let mouseX = 0;
+//    let mouseY = 0;
+//    c.addEventListener("mousemove", (e) => {
+//        const rect = c.getBoundingClientRect();
+//        mouseX = e.clientX - rect.left; // X inside canvas
+//        mouseY = e.clientY - rect.top;  // Y inside canvas
+//    });
+//    c.addEventListener("mousedown", function mousedown(event) {
+//        console.log(event)
+//        let clickcoords = {x: Math.floor(event.layerX / tilewidth), y: Math.floor(event.layerY / tileheight)}
+//        const rect = c.getBoundingClientRect();
+//        mouseX = e.clientX - rect.left; // X inside canvas
+//        mouseY = e.clientY - rect.top;  // Y inside canvas
+//        console.log(clickcoords)
+//        if (findPc(clickcoords.x, clickcoords.y)) {
+//        PcsList[findPc(clickcoords.x, clickcoords.y)].dragging = true
+//        }
+//        console.log(PcsList[findPc(clickcoords.x, clickcoords.y)].dragging)
+//    })
     for (let i = 0; i<PcsList.length; i++) {
+        if (!PcsList[i].dragging) {
         let tempsprite = new Sprite(tilewidth, tileheight, PcsList[i].x * tilewidth, PcsList[i].y * tileheight, PcsList[i].type, ctx)
         tempsprite.draw()
+        } else {
+            let tempsprite = new Sprite(tilewidth, tileheight, mouseX - tilewidth/2, mouseY -tileheight/2, PcsList[i].type, ctx)
+            tempsprite.draw()
+        }
     }
 }
+function setupInput(elementid, grid) {
+  const c = document.getElementById(elementid);
+
+  const getMouse = (e) => {
+    const rect = c.getBoundingClientRect();
+    mouseX = e.clientX - rect.left;
+    mouseY = e.clientY - rect.top;
+  };
+
+  c.addEventListener('mousemove', getMouse);
+
+  c.addEventListener('mousedown', (event) => {
+    getMouse(event);
+    const tilew = c.width / grid.length;
+    const tileh = c.height / grid[0].length;
+    const gx = Math.floor(mouseX / tilew);
+    const gy = Math.floor(mouseY / tileh);
+    const idx = findPc(gx, gy);
+    if (idx !== -1) {
+      draggingIdx = idx;
+      PcsList[idx].dragging = true;
+    }
+  });
+
+  const endDrag = (event) => {
+    if (draggingIdx !== -1) {
+      getMouse(event);
+      const tilew = c.width / grid.length;
+      const tileh = c.height / grid[0].length;
+      const nx = Math.max(0, Math.min(grid.length - 1, Math.floor(mouseX / tilew)));
+      const ny = Math.max(0, Math.min(grid[0].length - 1, Math.floor(mouseY / tileh)));
+      PcsList[draggingIdx].x = nx;
+      PcsList[draggingIdx].y = ny;
+      PcsList[draggingIdx].dragging = false;
+      draggingIdx = -1;
+    }
+  };
+
+  c.addEventListener('mouseup', endDrag);
+  c.addEventListener('mouseleave', endDrag);
+}
+
 let maingrid = createGrid(8,8)
 console.log(maingrid)
 addPc("K", "Black", 2, 4)
-console.log(PcsList)
-renderGrid(maingrid, "maincanvas")
-renderPcs(maingrid, "maincanvas")
+setupInput("maincanvas", maingrid)
+function drawAll() {
+    renderGrid(maingrid, "maincanvas")
+    renderPcs(maingrid, "maincanvas")
+    requestAnimationFrame(drawAll)
+}
+drawAll()
