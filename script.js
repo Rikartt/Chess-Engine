@@ -130,10 +130,10 @@ function renderPcs(grid, elementid) {
 //    })
     for (let i = 0; i<PcsList.length; i++) {
         if (!PcsList[i].dragging) {
-        let tempsprite = new Sprite(tilewidth, tileheight, PcsList[i].x * tilewidth, PcsList[i].y * tileheight, PcsList[i].type, ctx)
+        let tempsprite = new Sprite(tilewidth, tileheight, PcsList[i].x * tilewidth, PcsList[i].y * tileheight, `${PcsList[i].type}_${PcsList[i].color}`, ctx)
         tempsprite.draw()
         } else {
-            let tempsprite = new Sprite(tilewidth, tileheight, mouseX - tilewidth/2, mouseY -tileheight/2, PcsList[i].type, ctx)
+            let tempsprite = new Sprite(tilewidth, tileheight, mouseX - tilewidth/2, mouseY -tileheight/2, `${PcsList[i].type}_${PcsList[i].color}`, ctx)
             tempsprite.draw()
         }
     }
