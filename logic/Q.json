@@ -1,0 +1,14 @@
+{
+    "piece": "Q",
+    "move-type": "slider",
+    "capture-Type": "same",
+    "flipped-for-black": false,
+    "vectors": [ 
+        [1,1],[1,-1],
+        [-1,1],[-1,-1],
+        [0,1],[0,-1],
+        [-1,0],[1,0]
+    ],
+    "special": {
+    }
+}

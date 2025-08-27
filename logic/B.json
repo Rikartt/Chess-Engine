@@ -1,0 +1,12 @@
+{
+    "piece": "B",
+    "move-type": "slider",
+    "capture-Type": "same",
+    "flipped-for-black": false,
+    "vectors": [
+        [1,1],[1,-1],
+        [-1,1],[-1,-1]
+    ],
+    "special": {
+    }
+}

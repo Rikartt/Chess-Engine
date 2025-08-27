@@ -1,0 +1,12 @@
+{
+    "piece": "P",
+    "move-type": "leaper",
+    "capture-Type": "different",
+    "flipped-for-black": true,
+    "vectors": [[0,1]],
+    "special": {
+        "starting-pos-move": [[0,2]],
+        "en-passant": [[1,1],[-1,1]],         
+        "capture-vectors": [[1,1],[-1,1]]
+    }
+}

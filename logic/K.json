@@ -1,25 +1,9 @@
 {
     "piece": "K",
-    "move-type": "leaper", 
-    "first-move": [
-
-    ],
-    "end-of-board": [
-
-    ],
-    "castle-1": [
-
-    ],
-    "castle-2": [
-
-    ],
-    "capture": [
-
-    ],
-    "en-passant": [
-
-    ],
-    "Move-Vectors": [
+    "move-type": "leaper",
+    "capture-Type": "same",
+    "flipped-for-black": false,
+    "vectors": [
         [0, 1],
         [1, 0],
         [0, -1],
@@ -28,5 +12,9 @@
         [1, 1],
         [-1, 1],
         [1, -1]
-    ]
+    ],
+    "special": {
+        "castle-l": [[-3,0]],
+        "castle-r": [[2,0]]
+    }
 }

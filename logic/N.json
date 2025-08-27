@@ -1,0 +1,14 @@
+{
+    "piece": "N",
+    "move-type": "leaper",
+    "capture-Type": "same",
+    "flipped-for-black": false,
+    "vectors": [
+        [2,1], [2,-1], 
+        [-2,1],  [-2,-1],
+        [1,-2], [1,2],
+        [-1,-2], [-1,2]
+    ],
+    "special": {
+    }
+}
