@@ -1,5 +1,6 @@
 {
     "piece": "K",
+    "move-type": "leaper", 
     "first-move": [
 
     ],
@@ -18,7 +19,7 @@
     "en-passant": [
 
     ],
-    "Move": [
+    "Move-Vectors": [
         [0, 1],
         [1, 0],
         [0, -1],

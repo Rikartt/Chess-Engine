@@ -3,6 +3,23 @@
 
 ## Chess Engine By Rikard
 
+## Logic Data Structure
+Piece.json
+`
+{
+"piece" = "K" | "P" | "Q" | "R" | "B" | "N"
+"move-type" = "leaper" | "slider"
+"capture-Type" = "same" | "different"
+"flipped-for-black" = true | false
+"vectors" = [ [x,y], ... ]
+"special" = {
+    "Starting-pos-move" : [ [x,y], ... ],
+    "Castle-l" : [ [x,y], ... ],
+    "Castle-r" : [ [x,y], ... ],
+    "en-passant" : [ [x,y], ... ]
+}
+}
+`
 ## ROADMAP
 
 -   [ ] Set up a basic chess game
