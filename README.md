@@ -7,21 +7,21 @@
 Piece.json
 
 
-`
-{
-"piece": "K" | "P" | "Q" | "R" | "B" | "N",
-"move-type": "leaper" | "slider",
-"capture-Type": "same" | "different",
-"flipped-for-black": true | false,
-"vectors": [ [x,y], ... ],
-"special": {
-    "starting-pos-move": [ [x,y], ... ],
-    "castle-l": [ [x,y], ... ],
-    "castle-r": [ [x,y], ... ],
-    "en-passant": [ [x,y], ... ]
-}
-}
-`
+
+`{`
+`"piece": "K" | "P" | "Q" | "R" | "B" | "N",`
+`"move-type": "leaper" | "slider",`
+`"capture-Type": "same" | "different",`
+`"flipped-for-black": true | false,`
+`"vectors": [ [x,y], ... ],`
+`"special": {`
+`    "starting-pos-move": [ [x,y], ... ],`
+`    "castle-l": [ [x,y], ... ],`
+`    "castle-r": [ [x,y], ... ],`
+`    "en-passant": [ [x,y], ... ]`
+`}`
+`}`
+
 ## ROADMAP
 
 -   [ ] Set up a basic chess game
@@ -34,6 +34,12 @@ Piece.json
         -   [X] Make the logic modular by making a folder with json files containing logic such as possible moves for each piece i.e. K.json
     -   [X] Create functionality for the player to move the pieces
     -   [ ] Implement the logic
+        -   [ ] Make the script read the logic from the logic folder.
+            -   [ ] Restructure async function calling and have everything inside a single init() function
+            -   [ ] Write the logic-reading function(s)
+        -   [ ] Make the script use the logic to determine possible movable squares for the dragged piece and then draw half opaque circles on the possible squares.
+        -   [ ] Make capturing possible
+        -   [ ] Have the game determine when someone has won.
 -   [ ] Create a basic chess engine now that you have made a functioning chess game.
     -   [ ] Make the computer be able to input
     -   [ ] Give it positive and negative feedback for behavior
