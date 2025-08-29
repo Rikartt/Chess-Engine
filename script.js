@@ -81,6 +81,11 @@ async function readformation(formation) {
     console.log(data);
     return data
 }
+async function readlogic(logic) {
+    const data = await fetch(`logic/${logic}.json`).then(r => r.json());
+    console.log(data);
+    return data
+}
 function renderGrid (grid, elementid) {
     var c = document.getElementById(elementid);
     var ctx = c.getContext("2d");
@@ -97,6 +102,8 @@ function renderGrid (grid, elementid) {
     }
 }
 let PcsList = [] // Piece object structure {Type, Color, X, Y}
+let GlobLogic = []
+let PcsLogic = {}
 function addPc (type, color, x, y) {
     PcsList.push({type: type, color: color, x: x, y: y, dragging: false})
 }
@@ -179,9 +186,22 @@ function setupInput(elementid, grid) {
   c.addEventListener('mouseup', endDrag);
   c.addEventListener('mouseleave', endDrag);
 }
-readformation('starting_formation')
-  .then(data => PcsList = data)
-  .catch(err => console.error(err));
+async function init () {
+    try {
+        PcsList = await readformation('starting_formation');
+        GlobLogic = await readlogic('global');
+        for (let i=0;i<GlobLogic.Pcs.length;i++) {
+            let PcLogic = await readlogic(GlobLogic.Pcs[i])
+            PcsLogic[`${GlobLogic.Pcs[i]}`] = PcLogic
+        }
+    } catch (e) {
+        console.error(e)
+    }
+}
+init ()
+//readformation('starting_formation')
+//  .then(data => PcsList = data)
+//  .catch(err => console.error(err));
 let maingrid = createGrid(8,8)
 console.log(maingrid)
 //addPc("K", "Black", 2, 4)
@@ -191,4 +211,6 @@ function drawAll() {
     renderPcs(maingrid, "maincanvas")
     requestAnimationFrame(drawAll)
 }
+console.log(GlobLogic)
+console.log(PcsLogic)
 drawAll()

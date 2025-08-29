@@ -1,14 +1,14 @@
 {
-"piece": "R",
-"move-type": "slider",
-"capture-Type": "same",
-"flipped-for-black": true,
-"vectors": [
-    [0,1],[0,-1],
-    [-1,0],[1,0]
-],
-"special": {
-    "castle-l": [ [3,0]],
-    "castle-r": [ [-2,0]]
-}
+    "piece": "R",
+    "move-type": "slider",
+    "capture-Type": "same",
+    "flipped-for-black": true,
+    "vectors": [
+        [0,1],[0,-1],
+        [-1,0],[1,0]
+    ],
+    "special": {
+        "castle-l": [ [3,0]],
+        "castle-r": [ [-2,0]]
+    }
 }
