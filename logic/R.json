@@ -1,7 +1,7 @@
 {
     "piece": "R",
     "move-type": "slider",
-    "capture-Type": "same",
+    "capture-type": "same",
     "flipped-for-black": true,
     "vectors": [
         [0,1],[0,-1],

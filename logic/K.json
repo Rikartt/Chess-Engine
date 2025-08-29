@@ -1,7 +1,7 @@
 {
     "piece": "K",
     "move-type": "leaper",
-    "capture-Type": "same",
+    "capture-type": "same",
     "flipped-for-black": false,
     "vectors": [
         [0, 1],
