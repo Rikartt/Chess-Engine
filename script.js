@@ -8,8 +8,11 @@ function createGrid (width, height) {
     }
     return retgrid
 }
+//const highlightlist = [] //List of highlighted piece Idx's
 const TILECOLOR1 = "#c4c4c4"
 const TILECOLOR2 = "#303030"
+const GRIDHEIGHT = 8
+const GRIDWIDTH = 8
 const imgcache = {} //image cache so it doesnt get super cluttered
 class Sprite {
     constructor(width, height, x, y, name, ctx) {
@@ -32,7 +35,7 @@ class Sprite {
     draw() {
         if (this.image.complete) {
             this.ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
-            console.log("drew image")
+            //console.log("drew image")
         } else {
             this.image.addEventListener("load", () => {
             this.ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
@@ -111,6 +114,70 @@ function findPc (x, y) {
     let ismatch = (element) => element.x == x && element.y == y;
     if (PcsList.findIndex(ismatch) != -1) {return PcsList.findIndex(ismatch)} else {return false};
 }
+function GetAllowedSquares (idx, gridwidth, gridheight) { //Takes a piece's idx, determines possible leaps/vectors/captures and checks if said ones are occupied. Returns a list of every possible capture/move in the following structure {captures: [[x,y], ...], moves: [[x,y], ...]}
+    let PcType = PcsList[idx].type//Get Piece type
+    let PcCapType = PcsList[idx]['capture-type']
+    let PcLogic = PcsLogic[PcType]//Use piece type to pull the logic from the PcsLogic dict
+    let PcColor = PcsList[idx].color
+    let sx = PcsList[idx].x; let sy = PcsList[idx].y //self x and self y
+    let MvList = []
+    let CapList = []
+    const iswithingrid = (coord) => coord[0] <= gridwidth && coord[1] <= gridheight && coord[0] >= 0 && coord[1] >= 0; //function that checks if a coordinate is within bounds
+    let MvType = PcLogic['move-type']
+    let flippedcoefficient = 1 // Needs to be changed to -1 if flipped-for-black = true and color = black
+    let retobj = {captures: [], moves: []}
+    if (PcLogic['flipped-for-black'] && PcColor == 'black') {
+        flippedcoefficient = -1
+    }
+    if (MvType == "leaper") { // moves for leapers are of course going to be handled differently than for sliders
+        for (let i=0;i<PcLogic['vectors'].length;i++) {
+           MvList.push(PcLogic['vectors'][i].map(n => flippedcoefficient*n)) //adds vector to MvList but multiplies it with the flippedcoefficient first
+        }
+        for (let i=0;i<MvList.length;i++) {
+            let square = [sx + MvList[i][0],sy + MvList[i][1]]
+            if (iswithingrid(square)) { //checks if coords are within grid
+                if (!findPc(square[0], square[1])) { //Pushes the leaps where no piece is to the returnlist
+                    retobj['moves'].push(square);
+                } else { //captures for the ones with their capture mode set to same
+                    if (PcsList[idx]['capture-type'] == 'same') {
+                        retobj['captures'].push(square);
+                    }
+                }
+            }
+        }
+    } else { // slider logic handling
+        for (let i=0;i<PcLogic['vectors'].length;i++) {
+            MvList.push(PcLogic['vectors'][i].map(n => flippedcoefficient*n));
+        }
+        for (let i=0;i<MvList.length;i++) {
+            for (let j=0;j<gridwidth;j++) {
+                let square = [sx + MvList[i][0]*j,sy + MvList[i][1]*j]
+                if (iswithingrid(square)) { //checks within grid
+                    if (!findPc(square[0], square[1])) { //if there isnt a piece on the square
+                        retobj['moves'].push(square); //pushes square to moves list
+                    } else if (findPc(square[0], square[1]) ) { //if there is a piece on the square
+                        if (PcCapType == "same") { //if the capture type is set to same
+                            retobj['captures'].push(square);  //push to captures
+                        }
+                        break // break
+                    }
+                }
+            }
+        }
+    }
+    if (PcCapType == 'different') { //same capture handling is inside the leaper and slider handling, but different handling will be here
+        for (let i=0;i<gridwidth;i++) {
+            CapList.push(PcLogic['special']['capture-vectors'][i].map(n => flippedcoefficient*n))
+        }
+         for (let i=0;i<CapList;i++) {
+            let square = [sx + Caplist[i][0], sy + CapList[i][1]]
+            if (findPc(square[0], square[1])) {
+                retobj['captures'].push(square)
+            }
+         }
+    }
+    return retobj //return x and y coords of every allowed square
+}
 function renderPcs(grid, elementid) {
     var c = document.getElementById(elementid);
     var ctx = c.getContext("2d");
@@ -178,6 +245,7 @@ function setupInput(elementid, grid) {
       const ny = Math.max(0, Math.min(grid[0].length - 1, Math.floor(mouseY / tileh)));
       PcsList[draggingIdx].x = nx;
       PcsList[draggingIdx].y = ny;
+      console.log(GetAllowedSquares(draggingIdx, GRIDWIDTH, GRIDHEIGHT))
       PcsList[draggingIdx].dragging = false;
       draggingIdx = -1;
     }
@@ -202,8 +270,9 @@ init ()
 //readformation('starting_formation')
 //  .then(data => PcsList = data)
 //  .catch(err => console.error(err));
-let maingrid = createGrid(8,8)
+let maingrid = createGrid(GRIDHEIGHT,GRIDWIDTH)
 console.log(maingrid)
+console.log(PcsLogic)
 //addPc("K", "Black", 2, 4)
 setupInput("maincanvas", maingrid)
 function drawAll() {
@@ -211,6 +280,6 @@ function drawAll() {
     renderPcs(maingrid, "maincanvas")
     requestAnimationFrame(drawAll)
 }
-console.log(GlobLogic)
-console.log(PcsLogic)
+console.log("GlobLogic: ", GlobLogic)
+console.log("PcsLogic: ", PcsLogic)
 drawAll()
