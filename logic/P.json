@@ -2,7 +2,7 @@
     "piece": "P",
     "move-type": "leaper",
     "capture-type": "different",
-    "flipped-for-black": true,
+    "flipped-for-white": true,
     "vectors": [[0,1]],
     "special": {
         "starting-pos-move": [[0,2]],

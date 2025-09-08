@@ -2,7 +2,7 @@
     "piece": "R",
     "move-type": "slider",
     "capture-type": "same",
-    "flipped-for-black": true,
+    "flipped-for-white": true,
     "vectors": [
         [0,1],[0,-1],
         [-1,0],[1,0]

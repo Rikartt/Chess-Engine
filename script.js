@@ -116,7 +116,7 @@ function findPc (x, y) {
 }
 function GetAllowedSquares (idx, gridwidth, gridheight) { //Takes a piece's idx, determines possible leaps/vectors/captures and checks if said ones are occupied. Returns a list of every possible capture/move in the following structure {captures: [[x,y], ...], moves: [[x,y], ...]}
     let PcType = PcsList[idx].type//Get Piece type
-    let PcCapType = PcsList[idx]['capture-type']
+    let PcCapType = PcsLogic[PcType]["capture-type"]
     let PcLogic = PcsLogic[PcType]//Use piece type to pull the logic from the PcsLogic dict
     let PcColor = PcsList[idx].color
     let sx = PcsList[idx].x; let sy = PcsList[idx].y //self x and self y
@@ -126,7 +126,7 @@ function GetAllowedSquares (idx, gridwidth, gridheight) { //Takes a piece's idx,
     let MvType = PcLogic['move-type']
     let flippedcoefficient = 1 // Needs to be changed to -1 if flipped-for-black = true and color = black
     let retobj = {captures: [], moves: []}
-    if (PcLogic['flipped-for-black'] && PcColor == 'black') {
+    if (PcLogic['flipped-for-white'] && PcColor == 'white') {
         flippedcoefficient = -1
     }
     if (MvType == "leaper") { // moves for leapers are of course going to be handled differently than for sliders
@@ -135,13 +135,12 @@ function GetAllowedSquares (idx, gridwidth, gridheight) { //Takes a piece's idx,
         }
         for (let i=0;i<MvList.length;i++) {
             let square = [sx + MvList[i][0],sy + MvList[i][1]]
+            let occupier = PcsList[findPc(square[0], square[1])];
             if (iswithingrid(square)) { //checks if coords are within grid
-                if (!findPc(square[0], square[1])) { //Pushes the leaps where no piece is to the returnlist
+                if (!occupier) { //Pushes the leaps where no piece is to the returnlist
                     retobj['moves'].push(square);
-                } else { //captures for the ones with their capture mode set to same
-                    if (PcsList[idx]['capture-type'] == 'same') {
-                        retobj['captures'].push(square);
-                    }
+                } else if (occupier['color'] != PcColor && PcCapType == 'same') { //captures for the ones with their capture mode set to same
+                    retobj['captures'].push(square);
                 }
             }
         }
@@ -176,6 +175,7 @@ function GetAllowedSquares (idx, gridwidth, gridheight) { //Takes a piece's idx,
             }
          }
     }
+    console.log(PcCapType)
     return retobj //return x and y coords of every allowed square
 }
 function renderPcs(grid, elementid) {

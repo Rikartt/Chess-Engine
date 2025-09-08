@@ -40,8 +40,9 @@ Piece.json
         -   [ ] Make the script use the logic to determine possible movable squares for the dragged piece and then draw half opaque circles on the possible squares.
             -   [ ] Write a function that takes a piece's idx and returns possible moves/captures.
                 -   [X] The function is written but doesn't fully work yet. Following are the things left to do until the parent point can be checked
-                -   [ ] The flipped for black attribute should be 'flipped for white'. Luckily you have the flippedcoefficient in the reading code so you just have to change the logic data.
-                -   [ ] Only list pieces that are the opposite color as captures. This prevents future friendly fire.
+                -   [X] The flipped for black attribute should be 'flipped for white'. Luckily you have the flippedcoefficient in the reading code so you just have to change the logic data.
+                -   [X] Only list pieces that are the opposite color as captures. And make captures possible at all, for some reason it doesn't work yet. This prevents future friendly fire.
+                -   [ ] Capturing only works for leapers as of now. Make it work for sliders, and make sliders work at all because right now it doesn't.
             -   [ ] Write a function that takes said moves and captures and draws previously mentioned half opaque circles over them
         -   [ ] Make capturing possible
         -   [ ] Have the game determine when someone has won.

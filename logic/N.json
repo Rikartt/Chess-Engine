@@ -2,7 +2,7 @@
     "piece": "N",
     "move-type": "leaper",
     "capture-type": "same",
-    "flipped-for-black": false,
+    "flipped-for-white": false,
     "vectors": [
         [2,1], [2,-1], 
         [-2,1],  [-2,-1],
