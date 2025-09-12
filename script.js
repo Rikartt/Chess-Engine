@@ -149,7 +149,7 @@ function GetAllowedSquares (idx, gridwidth, gridheight) { //Takes a piece's idx,
             MvList.push(PcLogic['vectors'][i].map(n => flippedcoefficient*n));
         }
         for (let i=0;i<MvList.length;i++) {
-            for (let j=0;j<gridwidth;j++) {
+            for (let j=1;j<gridwidth;j++) {
                 let square = [sx + MvList[i][0]*j,sy + MvList[i][1]*j]
                 if (iswithingrid(square)) { //checks within grid
                     if (!findPc(square[0], square[1])) { //if there isnt a piece on the square
@@ -158,7 +158,7 @@ function GetAllowedSquares (idx, gridwidth, gridheight) { //Takes a piece's idx,
                         if (PcCapType == "same") { //if the capture type is set to same
                             retobj['captures'].push(square);  //push to captures
                         }
-                        break // break
+                        j=gridwidth // break
                     }
                 }
             }
@@ -166,7 +166,9 @@ function GetAllowedSquares (idx, gridwidth, gridheight) { //Takes a piece's idx,
     }
     if (PcCapType == 'different') { //same capture handling is inside the leaper and slider handling, but different handling will be here
         for (let i=0;i<gridwidth;i++) {
+            for (let j=0;j<PcLogic['special']['capture-vectors'];j++) {
             CapList.push(PcLogic['special']['capture-vectors'][i].map(n => flippedcoefficient*n))
+            }
         }
          for (let i=0;i<CapList;i++) {
             let square = [sx + Caplist[i][0], sy + CapList[i][1]]
@@ -177,6 +179,41 @@ function GetAllowedSquares (idx, gridwidth, gridheight) { //Takes a piece's idx,
     }
     console.log(PcCapType)
     return retobj //return x and y coords of every allowed square
+}
+function drawhighlight(x, y, ctx, type, radius) {
+    const highlightcolor = "rgb(0 0 0 / 25%)"
+    if (type == 'move') {
+        ctx.beginPath();
+        ctx.arc(x, y, radius, 0, 2 * Math.PI);
+        ctx.fillStyle = highlightcolor
+        ctx.fill();
+        ctx.strokeStyle = highlightcolor;
+        ctx.stroke();
+        console.log('drew highlight')
+    }
+    if (type == 'capture') {
+        ctx.beginPath();
+        ctx.arc(x, y, radius, 0, 2 * Math.PI);
+        ctx.strokeStyle = highlightcolor;
+        ctx.lineWidth = 30;
+        ctx.stroke();
+        console.log('drew highlight')
+    }
+}
+function highlightsquares(grid, elementid, moves, captures) {
+    var c = document.getElementById(elementid);
+    var ctx = c.getContext("2d");
+    var dwidth = c.width; var dheight = c.height; //Screen width and height
+    var tilewidth = dwidth / grid.length; var tileheight = dheight / grid[0].length; // Tile height and width
+    
+    for (let i=0;i<moves.length;i++) {
+        let square = [moves[i][0], moves[i][1]]; var circlex = (square[0]+0.5)*tilewidth; var circley = (square[1]+0.5)*tileheight; 
+        drawhighlight(circlex, circley, ctx, 'move', tilewidth/2)
+    }
+    for (let i=0;i<captures.length;i++) {
+        let square = [captures[i][0], captures[i][1]]; var circlex = (square[0]+0.5)*tilewidth; var circley = (square[1]+0.5)*tileheight; 
+        drawhighlight(circlex, circley, ctx, 'capture', tilewidth/2)
+    }
 }
 function renderPcs(grid, elementid) {
     var c = document.getElementById(elementid);
@@ -212,9 +249,10 @@ function renderPcs(grid, elementid) {
         }
     }
 }
+let highlightedSquares = {captures: [], moves: []}
 function setupInput(elementid, grid) {
   const c = document.getElementById(elementid);
-
+    
   const getMouse = (e) => {
     const rect = c.getBoundingClientRect();
     mouseX = e.clientX - rect.left;
@@ -230,10 +268,15 @@ function setupInput(elementid, grid) {
     const gx = Math.floor(mouseX / tilew);
     const gy = Math.floor(mouseY / tileh);
     const idx = findPc(gx, gy);
+    
     if (idx !== -1) {
       draggingIdx = idx;
       PcsList[idx].dragging = true;
     }
+    let allowedSquares = GetAllowedSquares(draggingIdx, GRIDWIDTH, GRIDHEIGHT);
+      console.log(GetAllowedSquares(draggingIdx, GRIDWIDTH, GRIDHEIGHT))
+      highlightedSquares.moves = allowedSquares.moves || []
+      highlightedSquares.captures = allowedSquares.captures || []
   });
 
   const endDrag = (event) => {
@@ -245,7 +288,6 @@ function setupInput(elementid, grid) {
       const ny = Math.max(0, Math.min(grid[0].length - 1, Math.floor(mouseY / tileh)));
       PcsList[draggingIdx].x = nx;
       PcsList[draggingIdx].y = ny;
-      console.log(GetAllowedSquares(draggingIdx, GRIDWIDTH, GRIDHEIGHT))
       PcsList[draggingIdx].dragging = false;
       draggingIdx = -1;
     }
@@ -278,6 +320,7 @@ setupInput("maincanvas", maingrid)
 function drawAll() {
     renderGrid(maingrid, "maincanvas")
     renderPcs(maingrid, "maincanvas")
+    highlightsquares(maingrid, "maincanvas", highlightedSquares.moves, highlightedSquares.captures);
     requestAnimationFrame(drawAll)
 }
 console.log("GlobLogic: ", GlobLogic)
