@@ -43,6 +43,9 @@ Piece.json
                 -   [X] The flipped for black attribute should be 'flipped for white'. Luckily you have the flippedcoefficient in the reading code so you just have to change the logic data.
                 -   [X] Only list pieces that are the opposite color as captures. And make captures possible at all, for some reason it doesn't work yet. This prevents future friendly fire.
                 -   [X] Capturing only works for leapers as of now. Make it work for sliders, and make sliders work at all because right now it doesn't.
+                -   Fix issues:
+                    -   [ ] When a capture is possible, the function seems to list ALL possible moves as captures even though there's just one
+                    -   [ ] start using the global logic checker to change the global variables such as, castling possible and other special moves. Do this by adding isUnmoved variable to each piece object.
             -   [ ] Write a function that takes said moves and captures and draws previously mentioned half opaque circles over them
                 -   [X] moves
                 -   [ ] captures
