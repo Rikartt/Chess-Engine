@@ -135,7 +135,7 @@ function GetAllowedSquares (idx, gridwidth, gridheight) { //Takes a piece's idx,
         }
         for (let i=0;i<MvList.length;i++) {
             let square = [sx + MvList[i][0],sy + MvList[i][1]]
-            let occupier = PcsList[findPc(square[0], square[1])];
+            let occupier = PcsList[findPc(square[0], square[1])] || null;
             if (iswithingrid(square)) { //checks if coords are within grid
                 if (!occupier) { //Pushes the leaps where no piece is to the returnlist
                     retobj['moves'].push(square);
@@ -150,9 +150,10 @@ function GetAllowedSquares (idx, gridwidth, gridheight) { //Takes a piece's idx,
         }
         for (let i=0;i<MvList.length;i++) {
             for (let j=1;j<gridwidth;j++) {
-                let square = [sx + MvList[i][0]*j,sy + MvList[i][1]*j]
+                let square = [sx + MvList[i][0]*j,sy + MvList[i][1]*j];
+                let occupier = PcsList[findPc(square[0], square[1])] || null;
                 if (iswithingrid(square)) { //checks within grid
-                    if (!findPc(square[0], square[1])) { //if there isnt a piece on the square
+                    if (!occupier) { //if there isnt a piece on the square
                         retobj['moves'].push(square); //pushes square to moves list
                     } else if (findPc(square[0], square[1]) ) { //if there is a piece on the square
                         if (PcCapType == "same") { //if the capture type is set to same
@@ -187,9 +188,9 @@ function drawhighlight(x, y, ctx, type, radius) {
         ctx.arc(x, y, radius, 0, 2 * Math.PI);
         ctx.fillStyle = highlightcolor
         ctx.fill();
-        ctx.strokeStyle = highlightcolor;
-        ctx.stroke();
-        console.log('drew highlight')
+        //ctx.strokeStyle = highlightcolor;
+        //ctx.stroke();
+        //console.log('drew highlight')
     }
     if (type == 'capture') {
         ctx.beginPath();
