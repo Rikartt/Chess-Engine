@@ -81,6 +81,9 @@ const mapNumtoLetter = {
 async function readformation(formation) {
     // /public/data.json -> same origin
     const data = await fetch(`formations/${formation}.json`).then(r => r.json());
+    for (let i = 0; i<data.length;i++) {
+        i['isUnmoved'] = false
+    }
     console.log(data);
     return data
 }
@@ -122,7 +125,7 @@ function GetAllowedSquares (idx, gridwidth, gridheight) { //Takes a piece's idx,
     let sx = PcsList[idx].x; let sy = PcsList[idx].y //self x and self y
     let MvList = []
     let CapList = []
-    const iswithingrid = (coord) => coord[0] <= gridwidth && coord[1] <= gridheight && coord[0] >= 0 && coord[1] >= 0; //function that checks if a coordinate is within bounds
+    const iswithingrid = (coord) => coord[0] < gridwidth && coord[1] < gridheight && coord[0] >= 0 && coord[1] >= 0; //function that checks if a coordinate is within bounds
     let MvType = PcLogic['move-type']
     let flippedcoefficient = 1 // Needs to be changed to -1 if flipped-for-black = true and color = black
     let retobj = {captures: [], moves: []}
@@ -155,11 +158,12 @@ function GetAllowedSquares (idx, gridwidth, gridheight) { //Takes a piece's idx,
                 if (iswithingrid(square)) { //checks within grid
                     if (!occupier) { //if there isnt a piece on the square
                         retobj['moves'].push(square); //pushes square to moves list
-                    } else if (findPc(square[0], square[1]) ) { //if there is a piece on the square
-                        if (PcCapType == "same") { //if the capture type is set to same
-                            retobj['captures'].push(square);  //push to captures
-                        }
-                        j=gridwidth // break
+                    } else if (occupier && occupier['color'] != PcColor && PcCapType == "same") { //if there is a piece on the square that isn't the color of the piece
+                        console.log("occupier color", occupier['color'], "my color", PcColor)
+                        retobj['captures'].push(square);
+                        j=gridwidth+1 // break
+                    } else {
+                        break
                     }
                 }
             }
@@ -181,6 +185,9 @@ function GetAllowedSquares (idx, gridwidth, gridheight) { //Takes a piece's idx,
     console.log(PcCapType)
     return retobj //return x and y coords of every allowed square
 }
+function globalLogicChecker (grid) {
+    
+}
 function drawhighlight(x, y, ctx, type, radius) {
     const highlightcolor = "rgb(0 0 0 / 25%)"
     if (type == 'move') {
@@ -198,7 +205,7 @@ function drawhighlight(x, y, ctx, type, radius) {
         ctx.strokeStyle = highlightcolor;
         ctx.lineWidth = 30;
         ctx.stroke();
-        console.log('drew highlight')
+        //console.log('drew highlight')
     }
 }
 function highlightsquares(grid, elementid, moves, captures) {
