@@ -82,7 +82,7 @@ async function readformation(formation) {
     // /public/data.json -> same origin
     const data = await fetch(`formations/${formation}.json`).then(r => r.json());
     for (let i = 0; i<data.length;i++) {
-        i['isUnmoved'] = false
+        data[i]['isUnmoved'] = false
     }
     console.log(data);
     return data
