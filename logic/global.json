@@ -1,3 +1,9 @@
 {
-    "Pcs": ["K", "Q", "N", "B", "R", "P"]
+    "Pcs": ["K", "Q", "N", "B", "R", "P"],
+    "Teams": ["white", "black"],
+    "Turn": "white",
+    "castle-r-w": false,
+    "castle-l-w": false,
+    "castle-r-b": false,
+    "castle-l-b": false
 }

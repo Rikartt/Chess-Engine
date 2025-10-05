@@ -4,255 +4,223 @@
     "color": "black",
     "x": 0,
     "y": 0,
-    "dragging": false,
-    "isUnmoved": true
+    "dragging": false
   },
   {
     "type": "N",
     "color": "black",
     "x": 1,
     "y": 0,
-    "dragging": false,
-    "isUnmoved": true
+    "dragging": false
   },
   {
     "type": "B",
     "color": "black",
     "x": 2,
     "y": 0,
-    "dragging": false,
-    "isUnmoved": true
+    "dragging": false
   },
   {
     "type": "Q",
     "color": "black",
     "x": 3,
     "y": 0,
-    "dragging": false,
-    "isUnmoved": true
+    "dragging": false
   },
   {
     "type": "K",
     "color": "black",
     "x": 4,
     "y": 0,
-    "dragging": false,
-    "isUnmoved": true
+    "dragging": false
   },
   {
     "type": "B",
     "color": "black",
     "x": 5,
     "y": 0,
-    "dragging": false,
-    "isUnmoved": true
+    "dragging": false
   },
   {
     "type": "N",
     "color": "black",
     "x": 6,
     "y": 0,
-    "dragging": false,
-    "isUnmoved": true
+    "dragging": false
   },
   {
     "type": "R",
     "color": "black",
     "x": 7,
     "y": 0,
-    "dragging": false,
-    "isUnmoved": true
+    "dragging": false
   },
   {
     "type": "P",
     "color": "black",
     "x": 0,
     "y": 1,
-    "dragging": false,
-    "isUnmoved": true
+    "dragging": false
   },
   {
     "type": "P",
     "color": "black",
     "x": 1,
     "y": 1,
-    "dragging": false,
-    "isUnmoved": true
+    "dragging": false
   },
   {
     "type": "P",
     "color": "black",
     "x": 2,
     "y": 1,
-    "dragging": false,
-    "isUnmoved": true
+    "dragging": false
   },
   {
     "type": "P",
     "color": "black",
     "x": 3,
     "y": 1,
-    "dragging": false,
-    "isUnmoved": true
+    "dragging": false
   },
   {
     "type": "P",
     "color": "black",
     "x": 4,
     "y": 1,
-    "dragging": false,
-    "isUnmoved": true
+    "dragging": false
   },
   {
     "type": "P",
     "color": "black",
     "x": 5,
     "y": 1,
-    "dragging": false,
-    "isUnmoved": true
+    "dragging": false
   },
   {
     "type": "P",
     "color": "black",
     "x": 6,
     "y": 1,
-    "dragging": false,
-    "isUnmoved": true
+    "dragging": false
   },
   {
     "type": "P",
     "color": "black",
     "x": 7,
     "y": 1,
-    "dragging": false,
-    "isUnmoved": true
+    "dragging": false
   },
   {
     "type": "P",
     "color": "white",
     "x": 0,
     "y": 6,
-    "dragging": false,
-    "isUnmoved": true
+    "dragging": false
   },
   {
     "type": "P",
     "color": "white",
     "x": 1,
     "y": 6,
-    "dragging": false,
-    "isUnmoved": true
+    "dragging": false
   },
   {
     "type": "P",
     "color": "white",
     "x": 2,
     "y": 6,
-    "dragging": false,
-    "isUnmoved": true
+    "dragging": false
   },
   {
     "type": "P",
     "color": "white",
     "x": 3,
     "y": 6,
-    "dragging": false,
-    "isUnmoved": true
+    "dragging": false
   },
   {
     "type": "P",
     "color": "white",
     "x": 4,
     "y": 6,
-    "dragging": false,
-    "isUnmoved": true
+    "dragging": false
   },
   {
     "type": "P",
     "color": "white",
     "x": 5,
     "y": 6,
-    "dragging": false,
-    "isUnmoved": true
+    "dragging": false
   },
   {
     "type": "P",
     "color": "white",
     "x": 6,
     "y": 6,
-    "dragging": false,
-    "isUnmoved": true
+    "dragging": false
   },
   {
     "type": "P",
     "color": "white",
     "x": 7,
     "y": 6,
-    "dragging": false,
-    "isUnmoved": true
+    "dragging": false
   },
   {
     "type": "R",
     "color": "white",
     "x": 0,
     "y": 7,
-    "dragging": false,
-    "isUnmoved": true
+    "dragging": false
   },
   {
     "type": "N",
     "color": "white",
     "x": 1,
     "y": 7,
-    "dragging": false,
-    "isUnmoved": true
+    "dragging": false
   },
   {
     "type": "B",
     "color": "white",
     "x": 2,
     "y": 7,
-    "dragging": false,
-    "isUnmoved": true
+    "dragging": false
   },
   {
     "type": "Q",
     "color": "white",
     "x": 3,
     "y": 7,
-    "dragging": false,
-    "isUnmoved": true
+    "dragging": false
   },
   {
     "type": "K",
     "color": "white",
     "x": 4,
     "y": 7,
-    "dragging": false,
-    "isUnmoved": true
+    "dragging": false
   },
   {
     "type": "B",
     "color": "white",
     "x": 5,
     "y": 7,
-    "dragging": false,
-    "isUnmoved": true
+    "dragging": false
   },
   {
     "type": "N",
     "color": "white",
     "x": 6,
     "y": 7,
-    "dragging": false,
-    "isUnmoved": true
+    "dragging": false
   },
   {
     "type": "R",
     "color": "white",
     "x": 7,
     "y": 7,
-    "dragging": false,
-    "isUnmoved": true
+    "dragging": false
   }
 ]

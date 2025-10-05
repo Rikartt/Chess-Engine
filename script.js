@@ -81,9 +81,6 @@ const mapNumtoLetter = {
 async function readformation(formation) {
     // /public/data.json -> same origin
     const data = await fetch(`formations/${formation}.json`).then(r => r.json());
-    for (let i = 0; i<data.length;i++) {
-        data[i]['isUnmoved'] = false
-    }
     console.log(data);
     return data
 }
@@ -186,7 +183,11 @@ function GetAllowedSquares (idx, gridwidth, gridheight) { //Takes a piece's idx,
     return retobj //return x and y coords of every allowed square
 }
 function globalLogicChecker (grid) {
-    
+    GlobLogic["Turn"] = GlobLogic["Teams"][(GlobLogic["Teams"].findIndex(GlobLogic["Turn"]) + 1)%(GlobLogic["Teams"].length)]
+    // castle checker
+    // check checker (maybe put this and the check mate checker in another function that gets called every time a move is attempted, or call this function that much)
+    // check mate checker
+    // 
 }
 function drawhighlight(x, y, ctx, type, radius) {
     const highlightcolor = "rgb(0 0 0 / 25%)"
