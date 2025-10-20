@@ -182,9 +182,42 @@ function GetAllowedSquares (idx, gridwidth, gridheight) { //Takes a piece's idx,
     console.log(PcCapType)
     return retobj //return x and y coords of every allowed square
 }
+function areafind (cols, rows) { //returns list of the pieces within the list of rows and columns and returns false if there are none in the area. input goes as follows: areafind ([col1, col2, col...],[row1, row2, row...]);
+    let retlis = []
+    for (let i=0;i<cols.length;i++) {
+        for (let j=0;j<rows.length;j++) {
+            let temppc = findPc(rows[i],cols[j])
+            if (temppc) {retlis.push(temppc)}
+        }
+    }
+    if (retlis.length > 0) {return retlis} else {return false}
+}
 function globalLogicChecker (grid) {
     GlobLogic["Turn"] = GlobLogic["Teams"][(GlobLogic["Teams"].findIndex(GlobLogic["Turn"]) + 1)%(GlobLogic["Teams"].length)]
     // castle checker
+    if (findPc(3, 7).isUnmoved) { //if white king is unmoved
+        if (findPc(7, 7).isUnmoved) { // if right hand white rook is unmoved
+            if (!areafind([4, 5, 6], [7])) {
+                GlobLogic["castle-r-w"] = true
+            }
+        }
+        if (findPc(0, 0).isUnmoved) {
+            if (!areafind([1, 2], [7])) {
+                GlobLogic["castle-l-w"] = true
+            }
+        }
+    } else if (findPc(3, 0).isUnmoved) { //if white king is unmoved
+        if (findPc(7, 0).isUnmoved) { // if right hand white rook is unmoved
+            if (!areafind([4, 5, 6], [0])) {
+                GlobLogic["castle-r-b"] = true
+            }
+        }
+        if (findPc(0, 0).isUnmoved) {
+            if (!areafind([1, 2], [0])) {
+                GlobLogic["castle-l-b"] = true
+            }
+        }
+    }
     // check checker (maybe put this and the check mate checker in another function that gets called every time a move is attempted, or call this function that much)
     // check mate checker
     // 
